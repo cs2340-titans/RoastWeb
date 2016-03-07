@@ -42,3 +42,6 @@
 	border-color: grey;
 	padding: 0.3em;
 }
+body, html {
+	overflow-x: hidden
+}
