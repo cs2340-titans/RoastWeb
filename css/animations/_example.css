@@ -1,0 +1,30 @@
+.example-enter {
+    opacity: 0.01;
+    transition: opacity .5s ease-in;
+}
+
+.example-enter.example-enter-active {
+    opacity: 1;
+}
+
+.example-leave {
+    opacity: 1;
+    transition: opacity .5s ease-in;
+}
+
+.example-leave.example-leave-active {
+    opacity: 0;
+    display: none;
+}
+
+.wrapper > div > div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.wrapper {
+    position: relative;
+}
+

@@ -9,13 +9,44 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Logo from '../../img/logo.png';
+import {
+  AppBar
+} from 'material-ui';
+import LeftNavBar from './Sidebar.react';
+import LoginCard from './LoginCard.react';
+
+import { RouteTransition } from 'react-router-transition';
 
 class App extends Component {
+  onHamburgerTouch = (e) => {
+    this.refs.leftNav.handleToggle();
+    console.log("hhhh");
+  }
+
   render() {
     return (
-      <div className="wrapper">
-        <img className="logo" src={Logo} />
-        { this.props.children }
+      <div>
+
+        <LeftNavBar
+          ref="leftNav"
+        />
+        <AppBar
+          onLeftIconButtonTouchTap={this.onHamburgerTouch}
+          title="RoastWeb"
+          iconClassNameRight="muidocs-icon-navigation-expand-more"
+        />
+        <div className="wrapper" style={{paddingTop: 20}}>
+
+          <RouteTransition
+            pathname={this.props.location.pathname}
+            atEnter={{ translateX: 600 }}
+            atLeave={{ translateX: -600 }}
+            atActive={{ translateX: 0 }}
+            mapStyles={styles => ({ transform: `translateX(${styles.translateX}%)` })}
+          >
+            {this.props.children}
+          </RouteTransition>
+        </div>
       </div>
     );
   }

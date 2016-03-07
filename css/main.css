@@ -2,6 +2,9 @@
 
 @charset 'UTF-8';
 
+/* 0. Animations */
+@import 'animations/*.css';
+
 /* 1. Vendors */
 @import 'vendor/*.css';
 
