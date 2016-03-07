@@ -7,7 +7,7 @@ import CardTitle from 'material-ui/lib/card/card-title';
 import RaisedButton from 'material-ui/lib/raised-button';
 import CardText from 'material-ui/lib/card/card-text';
 import TextField from 'material-ui/lib/text-field';
-import browserHistory from '../app';
+import {browserHistory, firebaseRef} from '../app';
 import LinkStateMixin from 'react-addons-linked-state-mixin';
 var reactMixin = require('react-mixin');
 
@@ -28,7 +28,28 @@ class RegisterCard extends React.Component {
 
   doRegister = () => {
     console.log(this.state.email, this.state.password);
-  }
+    firebaseRef.createUser({
+      email    : this.state.email,
+      password : this.state.password
+    }, (error, userData) => {
+      if (error) {
+        console.log("Error creating user:", error);
+      } else {
+        console.log("Successfully created user with uid:", userData.uid);
+        firebaseRef.authWithPassword({
+          email: this.state.email,
+          password: this.state.password
+        }, (error, authData) => {
+          if (error) {
+            console.log("Error creating user:", error);
+          } else {
+            browserHistory.push("/");
+          }
+        });
+      }
+    });
+  };
+
   render = () => {
     return (
       <Card>

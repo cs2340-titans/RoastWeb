@@ -7,14 +7,16 @@ import CardTitle from 'material-ui/lib/card/card-title';
 import RaisedButton from 'material-ui/lib/raised-button';
 import CardText from 'material-ui/lib/card/card-text';
 import TextField from 'material-ui/lib/text-field';
-import browserHistory from '../app';
+import {browserHistory, firebaseRef} from '../app';
 import LinkStateMixin from 'react-addons-linked-state-mixin';
+import Snackbar from 'material-ui/lib/snackbar';
 var reactMixin = require('react-mixin');
 
 class LoginCard extends React.Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    errorText: ''
   };
   constructor(props) {
     super(props);
@@ -27,8 +29,22 @@ class LoginCard extends React.Component {
   }
 
   doLogin = () => {
+    firebaseRef.authWithPassword({
+      email: this.state.email,
+      password: this.state.password
+    }, (error, authData) => {
+      if (error) {
+        this.setState({
+          errorText: error.message
+        });
+      } else {
+        browserHistory.push("/");
+      }
+    });
+    console.log(firebaseRef);
     console.log(this.state.email, this.state.password);
-  }
+  };
+
   render = () => {
   return (
   <Card>
@@ -45,6 +61,7 @@ class LoginCard extends React.Component {
         type="password"
         onChange={this.changeState.bind(this, 'password')}
         value={this.state.password}
+        errorText={this.state.errorText}
       />
     </CardText>
     <CardActions>
