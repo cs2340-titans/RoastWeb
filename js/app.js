@@ -8,22 +8,11 @@
  */
 
 // Load the ServiceWorker, the Cache polyfill, the manifest.json file and the .htaccess file
-import 'file?name=[name].[ext]!../serviceworker.js';
 import 'file?name=[name].[ext]!../manifest.json';
 import 'file?name=[name].[ext]!../.htaccess';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
-// Check for ServiceWorker support before trying to install it
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/serviceworker.js').then(() => {
-    // Registration was successful
-  }).catch(() => {
-    // Registration failed
-  });
-} else {
-  // No ServiceWorker Support
-}
 
 // Import all the third party stuff
 import React from 'react';
@@ -35,7 +24,7 @@ import thunk from 'redux-thunk';
 import FontFaceObserver from 'fontfaceobserver';
 import createHistory from 'history/lib/createHashHistory';
 import Firebase from 'firebase';
-
+export let firebaseRef = new Firebase("https://roast-potato.firebaseio.com/");
 // Observer loading of Open Sans (to remove open sans, remove the <link> tag in the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Open Sans', {});
 
@@ -52,6 +41,7 @@ import ReadmePage from './components/pages/ReadmePage.react';
 import NotFoundPage from './components/pages/NotFound.react';
 import LoginPage from './components/pages/LoginPage.react';
 import RegisterPage from './components/pages/RegisterPage.react';
+import ReleasePage from './components/pages/ReleasePage.react';
 import App from './components/App.react';
 
 // Import the CSS file, which HtmlWebpackPlugin transfers to the build folder
@@ -82,7 +72,9 @@ ReactDOM.render(
         <Route path="/" component={HomePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/readme" component={ReadmePage} />
+        <Route path="/search" component={NotFoundPage} />
         <Route path="/register" component={RegisterPage} />
+        <Route path="/releases" component={ReleasePage} />
         <Route path="*" component={NotFoundPage} />
       </Route>
     </Router>
@@ -90,4 +82,3 @@ ReactDOM.render(
   document.getElementById('app')
 );
 
-export let firebaseRef = new Firebase("https://roast-potato.firebaseio.com/")
