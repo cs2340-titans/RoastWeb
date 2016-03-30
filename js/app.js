@@ -42,6 +42,8 @@ import NotFoundPage from './components/pages/NotFound.react';
 import LoginPage from './components/pages/LoginPage.react';
 import RegisterPage from './components/pages/RegisterPage.react';
 import ReleasePage from './components/pages/ReleasePage.react';
+import SearchPage from './components/pages/SearchPage.react';
+import ProfilePage from './components/pages/ProfilePage.react';
 import App from './components/App.react';
 
 // Import the CSS file, which HtmlWebpackPlugin transfers to the build folder
@@ -53,6 +55,8 @@ import rootReducer from './reducers/rootReducer';
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(rootReducer);
 
+
+
 // Make reducers hot reloadable, see http://stackoverflow.com/questions/34243684/make-redux-reducers-and-other-non-components-hot-loadable
 if (module.hot) {
   module.hot.accept('./reducers/rootReducer', () => {
@@ -62,6 +66,10 @@ if (module.hot) {
 }
 
 export let browserHistory = createHistory();
+
+export function navigateTo(url) {
+  browserHistory.push(url);
+};
 // Mostly boilerplate, except for the Routes. These are the pages you can go to,
 // which are all wrapped in the App component, which contains the navigation etc
 ReactDOM.render(
@@ -72,9 +80,10 @@ ReactDOM.render(
         <Route path="/" component={HomePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/readme" component={ReadmePage} />
-        <Route path="/search" component={NotFoundPage} />
+        <Route path="/search" component={SearchPage} />
         <Route path="/register" component={RegisterPage} />
         <Route path="/releases" component={ReleasePage} />
+        <Route path="/profile" component={ProfilePage} />
         <Route path="*" component={NotFoundPage} />
       </Route>
     </Router>

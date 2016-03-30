@@ -10,7 +10,8 @@ import CardTitle from 'material-ui/lib/card/card-title';
 import FlatButton from 'material-ui/lib/flat-button';
 import CardText from 'material-ui/lib/card/card-text';
 import Divider from 'material-ui/lib/divider';
-import {browserHistory, firebaseRef} from '../app';
+import {AVATAR_URL} from '../constants/AppConstants';
+import {navigateTo, firebaseRef} from '../app';
 
 export default class LeftNavBar extends React.Component {
 
@@ -46,9 +47,14 @@ export default class LeftNavBar extends React.Component {
 
   handleClose = () => this.setState({open: false});
 
+  handleRoute = (url) => {
+    navigateTo(url);
+    this.setState({open: false});
+  };
+
   doLogOut = () => {
     firebaseRef.unauth();
-    browserHistory.push('/');
+    navigateTo('/');
   };
 
   render() {
@@ -66,22 +72,28 @@ export default class LeftNavBar extends React.Component {
               <CardHeader
                 title={this.state.userName}
                 subtitle="RoastWeb User"
-                avatar="https://en.gravatar.com/userimage/18026152/e80f4a5f81ef7d667a2ef8f012093396.png"
+                avatar={AVATAR_URL}
               />
             </Card>);
             default:
               return null;
           }})()}
-          <MenuItem onTouchTap={() => {browserHistory.push('/')}}>Home</MenuItem>
-          <MenuItem onTouchTap={() => {browserHistory.push('/recommendations')}}>Recommendations</MenuItem>
-          <MenuItem onTouchTap={() => {browserHistory.push('/releases')}}>New Releases</MenuItem>
-          <MenuItem onTouchTap={() => {browserHistory.push('/search')}}>Search</MenuItem>
+          <MenuItem onTouchTap={() => {this.handleRoute('/')}}>Home</MenuItem>
+          <MenuItem onTouchTap={() => {this.handleRoute('/recommendations')}}>Recommendations</MenuItem>
+          <MenuItem onTouchTap={() => {this.handleRoute('/releases')}}>New Releases</MenuItem>
+          <MenuItem onTouchTap={() => {this.handleRoute('/search')}}>Search</MenuItem>
           <Divider />
           {(()=>{switch(this.state.loggedIn){
             case true:
               return (<MenuItem onTouchTap={this.doLogOut}>Log Out</MenuItem>);
             default:
-              return (<MenuItem onTouchTap={() => {browserHistory.push('/login')}}>Log In</MenuItem>);
+              return (<MenuItem onTouchTap={() => {this.handleRoute('/login')}}>Log In</MenuItem>);
+          }})()}
+          {(()=>{switch(this.state.loggedIn){
+            case true:
+              return (<MenuItem onTouchTap={() => {this.handleRoute('/profile')}}>My Profile</MenuItem>);
+            default:
+              return '';
           }})()}
         </LeftNav>
       </div>
