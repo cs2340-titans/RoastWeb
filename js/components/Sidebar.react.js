@@ -66,39 +66,46 @@ export default class LeftNavBar extends React.Component {
           open={this.state.open}
           onRequestChange={open => this.setState({open})}
         >
-          {(()=>{switch(this.state.loggedIn){
-            case true:
-            return (<Card>
-              <CardHeader
-                title={this.state.userName}
-                subtitle="RoastWeb User"
-                avatar={AVATAR_URL}
-              />
-            </Card>);
-            default:
-              return null;
-          }})()}
+          {(()=> {
+            switch (this.state.loggedIn) {
+              case true:
+                return (<Card>
+                  <CardHeader
+                    title={this.state.userName}
+                    subtitle="RoastWeb User"
+                    avatar={AVATAR_URL}
+                  />
+                </Card>);
+              default:
+                return null;
+            }
+          })()}
           <MenuItem onTouchTap={() => {this.handleRoute('/')}}>Home</MenuItem>
           <MenuItem onTouchTap={() => {this.handleRoute('/recommendations')}}>Recommendations</MenuItem>
           <MenuItem onTouchTap={() => {this.handleRoute('/releases')}}>New Releases</MenuItem>
           <MenuItem onTouchTap={() => {this.handleRoute('/search')}}>Search</MenuItem>
           <Divider />
-          {(()=>{switch(this.state.loggedIn){
-            case true:
-              return (<MenuItem onTouchTap={this.doLogOut}>Log Out</MenuItem>);
-            default:
-              return (<MenuItem onTouchTap={() => {this.handleRoute('/login')}}>Log In</MenuItem>);
-          }})()}
-          {(()=>{switch(this.state.loggedIn){
-            case true:
-              return (<MenuItem onTouchTap={() => {this.handleRoute('/profile')}}>My Profile</MenuItem>);
-            default:
-              return '';
-          }})()}
+          {(()=> {
+            switch (this.state.loggedIn) {
+              case true:
+                return (<MenuItem onTouchTap={this.doLogOut}>Log Out</MenuItem>);
+              default:
+                return (<MenuItem onTouchTap={() => {this.handleRoute('/login')}}>Log In</MenuItem>);
+            }
+          })()}
+          {(()=> {
+            switch (this.state.loggedIn) {
+              case true:
+                return (<MenuItem onTouchTap={() => {this.handleRoute('/profile')}}>My Profile</MenuItem>);
+              default:
+                return '';
+            }
+          })()}
         </LeftNav>
       </div>
     );
   }
-}/**
+}
+/**
  * Created by andy on 3/5/16.
  */
