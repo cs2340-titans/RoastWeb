@@ -16,8 +16,10 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
+import CardText from 'material-ui/lib/card/card-text';
 import {browserHistory, firebaseRef} from '../app';
 import RT from '../sources/RottenTomato';
+import MovieList from './MovieList.react';
 
 export default class SearchCard extends React.Component {
 
@@ -57,33 +59,23 @@ export default class SearchCard extends React.Component {
             <ToolbarTitle text={'Search'}/>
           </ToolbarGroup>
         </Toolbar>
-        <TextField
-          hintText="Panda Express 3"
-          floatingLabelText="Search Query"
-          onChange={this.changeState.bind(this, 'query')}
-          onEnterKeyDown={this.sendQuery}
-          value={this.state.query}
-        />
-        {(()=> {
-          if (this.state.showLoading) {
-            return (<CircularProgress size={2}/>);
-          } else if (this.state.showResults) {
-            return (<List>
-              {this.state.movies.map((m, i) => {
-                if (i != this.state.movies.length - 1) {
-                  return (<div key={i}>
-                    <ListItem primaryText={m.title}/>
-                    <Divider />
-                  </div>);
-                } else {
-                  return (<div key={i}>
-                    <ListItem primaryText={m.title}/>
-                  </div>);
-                }
-              })}
-            </List>)
-          }
-        })()}
+        <CardText>
+          <TextField
+            hintText="Panda Express 3"
+            floatingLabelText="Search Query"
+            onChange={this.changeState.bind(this, 'query')}
+            onEnterKeyDown={this.sendQuery}
+            value={this.state.query}
+          />
+
+          {(()=> {
+            if (this.state.showLoading) {
+              return (<CircularProgress size={2}/>);
+            } else if (this.state.showResults) {
+              return (<MovieList movies={this.state.movies} />)
+            }
+          })()}
+        </CardText>
       </Card>
     );
   }

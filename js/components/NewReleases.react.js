@@ -18,6 +18,7 @@ import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 import Slider from 'material-ui/lib/slider';
 import RT from '../sources/RottenTomato';
+import MovieList from './MovieList.react';
 
 class NewReleases extends React.Component {
   constructor(props) {
@@ -67,18 +68,7 @@ class NewReleases extends React.Component {
 
             {(() => {
               if (this.state.loaded) {
-                return this.state.list.map((m, i) => {
-                  if (i != this.state.list.length - 1) {
-                    return (<div key={i}>
-                      <ListItem primaryText={m.title} />
-                      <Divider />
-                    </div>);
-                  } else {
-                    return (<div key={i}>
-                      <ListItem primaryText={m.title} />
-                    </div>);
-                  }
-                });
+                return <MovieList movies={this.state.list} />
               } else {
                 return (<CircularProgress size={2} />);
               }
