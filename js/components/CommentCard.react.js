@@ -36,13 +36,16 @@ export default class CommentCard extends React.Component {
       let userRef = firebaseRef.child('profile/' + authData.uid + '/');
       let commentRef = firebaseRef.child('comments/' + authData.uid + '_' + this.props.movieId);
       this.state["uid"] = authData.uid;
-      this.state["commentRef"] = commentRef
+      this.state["commentRef"] = commentRef;
       userRef.on("value", (data) => {
         let user = data.val();
+        this.state["user"] = user;
         this.setState({user: user});
         commentRef.on("value", (data) => {
           let commentData = data.val();
-          if (commentData != null) this.setState(this.fromFBObj(commentData));
+          if (commentData != null) {
+            this.setState(this.fromFBObj(commentData));
+          }
         })
       });
     }
@@ -62,7 +65,7 @@ export default class CommentCard extends React.Component {
   fromFBObj = (obj) => {
     return {
       comment: obj.comment,
-      score: obj.rating
+      rating: obj.score
     };
   };
 
