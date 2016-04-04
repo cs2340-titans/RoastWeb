@@ -18,6 +18,28 @@ export default class LeftNavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {open: false, loggedIn: false};
+    let authData = firebaseRef.getAuth();
+    if (authData) {
+      let user = firebaseRef.child('profile/' + authData.uid + '/fullname');
+
+      this.state.loggedIn = true;
+      this.setState({
+        loggedIn: true
+      });
+
+      user.on("value", (data) => {
+        this.setState({userName: data.val()});
+      });
+    } else {
+      try {
+        this.setState({
+          loggedIn: false
+        });
+      } catch (e) {
+        this.state.loggedIn = false;
+      }
+    }
+
     firebaseRef.onAuth((authData) => {
       if (authData) {
         let user = firebaseRef.child('profile/' + authData.uid + '/fullname');
@@ -33,6 +55,7 @@ export default class LeftNavBar extends React.Component {
         });
       } else {
         try {
+
           this.setState({
             loggedIn: false
           });
@@ -40,7 +63,7 @@ export default class LeftNavBar extends React.Component {
           this.state.loggedIn = false;
         }
       }
-    })
+    });
   }
 
   handleToggle = () => this.setState({open: !this.state.open});

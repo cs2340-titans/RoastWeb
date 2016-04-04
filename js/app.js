@@ -44,6 +44,8 @@ import RegisterPage from './components/pages/RegisterPage.react';
 import ReleasePage from './components/pages/ReleasePage.react';
 import SearchPage from './components/pages/SearchPage.react';
 import ProfilePage from './components/pages/ProfilePage.react';
+import MoviePage from './components/pages/MoviePage.react';
+import CommentPage from './components/pages/CommentPage.react';
 import App from './components/App.react';
 
 // Import the CSS file, which HtmlWebpackPlugin transfers to the build folder
@@ -76,14 +78,16 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
 
-      <Route component={App}>
+      <Route component={App} >
         <Route path="/" component={HomePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/readme" component={ReadmePage} />
         <Route path="/search" component={SearchPage} />
         <Route path="/register" component={RegisterPage} />
         <Route path="/releases" component={ReleasePage} />
+        <Route path="/movie/:movieId/:movieTitle" component={MoviePage}/>
         <Route path="/profile" component={ProfilePage} />
+        <Route path="/comment/:movieId/:movieTitle" component={CommentPage}/>
         <Route path="*" component={NotFoundPage} />
       </Route>
     </Router>

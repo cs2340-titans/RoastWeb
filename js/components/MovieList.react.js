@@ -36,12 +36,12 @@ export default class MovieList extends React.Component {
         {this.props.movies.map((m, i) => {
           if (i != this.props.movies.length - 1) {
             return (<div key={i}>
-              <ListItem primaryText={m.title} onTouchTap={() => {navigateTo('/movies/' + m.id)}}/>
+              <ListItem primaryText={m.title} onTouchTap={() => {navigateTo('/movie/' + m.id + '/' + m.title)}}/>
               <Divider />
             </div>);
           } else {
             return (<div key={i}>
-              <ListItem primaryText={m.title} onTouchTap={() => {navigateTo('/movies/' + m.id)}}/>
+              <ListItem primaryText={m.title} onTouchTap={() => {navigateTo('/movie/' + m.id+ '/' + m.title)}}/>
             </div>);
           }
         })}
