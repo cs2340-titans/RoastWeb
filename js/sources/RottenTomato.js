@@ -5,7 +5,7 @@ import {ROTTEN_TOMATO_KEY} from '../constants/AppConstants';
 let Promise = require('es6-promise').Promise;
 import 'whatwg-fetch';
 
-let URL = "https://crossorigin.me/http://api.rottentomatoes.com/api/public/v1.0/";
+let URL = "http://cors.io/?u=http://api.rottentomatoes.com/api/public/v1.0/";
 let recent_dvd_partial = "lists/dvds/new_releases.json";
 let recent_movie_partial = "lists/movies/in_theaters.json";
 let search_partial = "movies.json?page_limit=25&page=1&q=";
@@ -35,7 +35,7 @@ let RottenTomato = {
     return my_fetch(URL + search_partial + query + '&apikey=' + ROTTEN_TOMATO_KEY).then(response => response.json());
   },
   movieDetails(title) {
-    let myUrl = "https://crossorigin.me/http://api.myapifilms.com/imdb/idIMDB?title="
+    let myUrl = "https://crossorigin.me/http://cors.io/?u=http://api.myapifilms.com/imdb/idIMDB?title="
       + title
       + "&token=9b107f66-bca6-4c2f-b0be-0636a7a3a174";
     return my_fetch(myUrl).then(response => response.json());
